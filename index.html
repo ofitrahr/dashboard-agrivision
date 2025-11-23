@@ -1,275 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agrivision - AgriTech Indonesia</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Landing Page</title>
   <style>
-    /* Custom styles for submenu */
-    .dropdown-submenu {
-      position: relative;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
     }
-    .dropdown-submenu .dropdown-menu {
-      top: 0;
-      left: 100%;
-      margin-left: 0.1rem;
-      margin-right: 0.1rem;
+    header {
+      background: #4a90e2;
+      padding: 240px;
+      text-align: left;
+      color: white;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #4a90e2;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #ddd;
+      margin-top: 40px;
     }
   </style>
 </head>
-
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="asset/agrivision.png" alt="Agrivision" height="50"></a>
-      
-      <!-- Toggler button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
-        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <nav style="display:flex; justify-content:space-between; align-items:center; background:#053B26; padding:18px 40px; box-shadow:0 2px 4px rgba(0,0,0,0.2); position:sticky; top:0; z-index:1000;">
+    <div>
+      <img src="asset/agrivision.png" alt="Company Logo" style="height:40px; object-fit:contain;" />
+    </div>
 
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div style="display:flex; gap:40px;">
+      <a href="#home" style="text-decoration:none; color:#FFFFFF; font-weight:bold; letter-spacing:0.5px;">Home</a>
 
-          <!-- Solutions dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarSolution" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Solutions
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarSolution">
-              <li><a class="dropdown-item" href="dashboard.html" target="_blank">Regenerative Farming Dashboard</a></li>
-            </ul>
-          </li>
+      <style>
+        a[href='dashboard.html']:hover {
+          transform: scale(1.07);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+      </style>
 
-          <!-- Resources dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarResource" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Resources
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarResource">
-              <!-- Framework submenu -->
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Framework</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Regenerative Farming</a></li>
-                  <li><a class="dropdown-item" href="#">Precision Farming</a></li>
-                  <li><a class="dropdown-item" href="#">Farming IoT and Technologies</a></li>
-                </ul>
-              </li>
-              <li><a class="dropdown-item" href="#">Blog</a></li>
-              <li><a class="dropdown-item" href="#">Events</a></li>
-              <li><a class="dropdown-item" href="#">Stories</a></li>
-            </ul>
-          </li>
-
-          <!-- Company dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarCompany" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Company
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarCompany">
-              <li><a class="dropdown-item" href="#">About</a></li>
-              <li><a class="dropdown-item" href="#">News</a></li>
-              <li><a class="dropdown-item" href="#">Leadership</a></li>
-              <li><a class="dropdown-item" href="#">Careers</a></li>
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Log In</a>
-          </li>
-        </ul>
-
-        <!-- Search -->
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
+      <a href="#solutions" style="text-decoration:none; color:#FFFFFF; font-weight:bold; letter-spacing:0.5px;">Our Solutions</a>
+      <a href="#about" style="text-decoration:none; color:#FFFFFF; font-weight:bold; letter-spacing:0.5px;">About Us</a>
     </div>
   </nav>
 
-  <!-- ✅ Success Alert (hidden by default) -->
-  <div id="successAlert" class="alert alert-success alert-dismissible fade show d-none m-0 rounded-0" role="alert">
-    ✅ Your form has been submitted successfully!
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+  <header style="background: url('asset/header_wallpaper.png') center/cover no-repeat; padding: 240px; color: white;">
+    <h1 style="font-size:48px; font-weight:700;">Climate-Smart and Regenerative Agriculture Solution</h1>
+    <p style="font-size:24px; font-weight:400;">Transforming Agriculture for Food Security and Carbon Neutrality</p>
 
-  <!-- Jumbotron / Hero Section -->
-  <div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container py-5">
-      <h1 class="display-4 fw-bold">Welcome to Agrivision</h1>
-      <p class="col-md-12 fs-5">
-        Leveraging technology and innovation to transform agriculture for a sustainable future. 
-        Explore our solutions, resources, and company mission to see how we can grow together.
-      </p>
-      <button class="btn btn-success btn-lg" type="button">Learn More</button>
-    </div>
-  </div>
+    <a href="loginpage.html" target="_blank"
+       style="display:inline-block; margin-top:20px; background:#7ED957; color:white; padding:14px 28px; border-radius:6px;
+       text-decoration:none; font-weight:bold; font-size:18px;
+       transition:transform 0.25s ease, box-shadow 0.25s ease;">
+      See Our Solutions
+    </a>
+  </header>
 
-  <!-- Form Section -->
-  <div class="container my-5">
-    <div class="row">
-      
-      <!-- Left column -->
-      <div class="col-lg-4 mb-4">
-        <h1>We Transform Agriculture to Save Our Planet</h1>
+  <!-- FULL-WIDTH WHO WE ARE SECTION WITH ICONS -->
+  <section style="background:#F4F7F6; padding:120px 70px; width:80%; max-width:none;">
+    <div style="width:100%; display:flex; gap:70px; align-items:flex-start;">
+
+      <!-- Left Text -->
+      <div style="flex:1; min-width:300px;">
+        <h2 style="color:#004D40; font-size:36px; margin-bottom:25px;">Who Are We?</h2>
+        <p style="line-height:1.8; font-size:18px; color:#2E3D3A;">
+          By harnessing satellite data and AI-power, we help businesses to invest confidently in regenerative agriculture that is not only able to improve crops productivity and farmer's livelihood but also increase carbon sequestration capacity and traceability.
+        </p>
       </div>
 
-      <!-- Right column (form) -->
-      <div class="col-lg-8 border p-4 rounded">
-        <form id="contactForm" class="needs-validation" novalidate>
-          <div class="row g-3">
+      <!-- Right Cards Grid (wider) -->
+      <div style="flex:3; display:grid; grid-template-columns:repeat(3,1fr); gap:32px; width:100%;">
 
-            <!-- First Name -->
-            <div class="col-md-6">
-              <label for="first_name" class="form-label fw-bold">First Name *</label>
-              <input type="text" class="form-control" name="first_name" id="first_name" required>
-              <div class="invalid-feedback">Please enter your first name.</div>
-            </div>
-
-            <!-- Last Name (optional) -->
-            <div class="col-md-6">
-              <label for="last_name" class="form-label fw-bold">Last Name</label>
-              <input type="text" class="form-control" name="last_name" id="last_name">
-            </div>
-
-            <!-- Email -->
-            <div class="col-md-6">
-              <label for="email" class="form-label fw-bold">Email Address *</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
-              <div class="invalid-feedback">Please enter a valid email address.</div>
-            </div>
-
-            <!-- Profession (optional) -->
-            <div class="col-md-6">
-              <label for="prof" class="form-label fw-bold">Please Select Your Profession</label>
-              <select name="prof" id="prof" class="form-select">
-                <option value="" selected disabled>Choose...</option>
-                <option value="dev">Developer</option>
-                <option value="design">Designer</option>
-                <option value="analyst">Analyst</option>
-              </select>
-            </div>
-
-            <!-- Describe -->
-            <div class="col-12">
-              <label for="describe" class="form-label fw-bold">Describe Yourself *</label>
-              <textarea name="describe" id="describe" class="form-control" rows="5" required></textarea>
-              <div class="invalid-feedback">Please provide a short description.</div>
-            </div>
-
-            <!-- Time Selection -->
-            <div class="col-12">
-              <label class="form-label fw-bold">Please Select Convenient Time *</label><br>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="time" id="morning" value="morning" required>
-                <label class="form-check-label fw-bold" for="morning">06.00 AM - 10.00 AM</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="time" id="afternoon" value="afternoon" required>
-                <label class="form-check-label fw-bold" for="afternoon">01.00 PM - 04.00 PM</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="time" id="evening" value="evening" required>
-                <label class="form-check-label fw-bold" for="evening">07.00 PM - 09.00 PM</label>
-              </div>
-              <div class="invalid-feedback d-block">Please select a time slot.</div>
-            </div>
-
-            <!-- Submit -->
-            <div class="col-12">
-              <button type="button" class="btn btn-success w-100" id="openModalBtn">
-                Submit
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Confirmation Modal -->
-  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="confirmModalLabel">Confirm Submission</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- CARD TEMPLATE WITH ICON -->
+        <div style="background:white; padding:35px; border-radius:12px;
+          box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+          <img src="asset/leaf.png" style="height:50px; margin-bottom:15px;">
+          <h3 style="color:#1B5E20; font-size:20px;">Regenerative Farming</h3>
+          <p style="font-size:15px; color:#555;">Restoring soil health and biodiversity through sustainable farming ethics</p>
         </div>
-        <div class="modal-body">
-          ✅ Are you sure you want to submit the form?<br>
-          You can go back and edit, or proceed to save.
+
+        <div style="background:white; padding:35px; border-radius:12px;
+          box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+          <img src="asset/carbon-footprint.png" style="height:50px; margin-bottom:15px;">
+          <h3 style="color:#1B5E20; font-size:20px;">Carbon Sequestration Efforts</h3>
+          <p style="font-size:15px; color:#555;">Designing the farming system so that it can capture atmospheric carbon emission</p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go Back & Edit</button>
-          <button type="button" class="btn btn-success" id="finalSubmit">Submit & Save</button>
+
+        <div style="background:white; padding:35px; border-radius:12px;
+          box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+          <img src="asset/wheat.png" style="height:50px; margin-bottom:15px;">
+          <h3 style="color:#1B5E20; font-size:20px;">Crop Yield Enhancement</h3>
+          <p style="font-size:15px; color:#555;">Enhancing crop output through efficient and resilient methods</p>
         </div>
+
+        <div style="background:white; padding:35px; border-radius:12px;
+          box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+          <img src="asset/farmer.png" style="height:50px; margin-bottom:15px;">
+          <h3 style="color:#1B5E20; font-size:20px;">Improvement of Farmer Livelihoods</h3>
+          <p style="font-size:15px; color:#555;">Empowering farmers with income stability and better opportunities</p>
+        </div>
+
+        <div style="background:white; padding:35px; border-radius:12px;
+          box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+          <img src="asset/orbit.png" style="height:50px; margin-bottom:15px;">
+          <h3 style="color:#1B5E20; font-size:20px;">Precision Agriculture using AI & Remote Sensing</h3>
+          <p style="font-size:15px; color:#555;">Leveraging data and technology for smarter, targeted farming</p>
+        </div>
+
+        <div style="background:white; padding:35px; border-radius:12px;
+          box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+          <img src="asset/survey.png" style="height:50px; margin-bottom:15px;">
+          <h3 style="color:#1B5E20; font-size:20px;">Multi-Stakeholder Collaboration</h3>
+          <p style="font-size:15px; color:#555;">Building strong partnerships across the agricultural value chain</p>
+        </div>
+
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Bootstrap Bundle with Popper -->
-  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <section>
+    <h2>About Our Product</h2>
+    <p>
+      This is a simple landing page template. You can customize the text, add
+      images, or include forms to collect user information.
+    </p>
 
-  <script>
-    // Submenu dropdown handler
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll('.dropdown-submenu .dropdown-toggle').forEach(function (element) {
-        element.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          let submenu = this.nextElementSibling;
-          if (submenu) {
-            submenu.classList.toggle('show');
-          }
-        });
-      });
-      document.addEventListener('click', function () {
-        document.querySelectorAll('.dropdown-submenu .dropdown-menu').forEach(function (submenu) {
-          submenu.classList.remove('show');
-        });
-      });
-    });
+    <a href="#" class="cta-button">Get Started</a>
+  </section>
 
-    // Modal trigger only if required fields are filled
-    const form = document.getElementById('contactForm');
-    const openModalBtn = document.getElementById('openModalBtn');
-
-    openModalBtn.addEventListener('click', function () {
-      if (form.checkValidity()) {
-        var myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        myModal.show();
-      } else {
-        form.classList.add('was-validated');
-      }
-    });
-
-    // Final submit button
-    document.getElementById("finalSubmit").addEventListener("click", function () {
-      var modalEl = document.getElementById('confirmModal');
-      var modal = bootstrap.Modal.getInstance(modalEl);
-      modal.hide();
-
-      const alertBox = document.getElementById("successAlert");
-      alertBox.classList.remove("d-none");
-
-      form.reset();
-      form.classList.remove("was-validated");
-
-      setTimeout(() => {
-        alertBox.classList.add("d-none");
-      }, 5000);
-    });
-  </script>
-
+  <footer>
+    &copy; 2025 Your Company Name
+  </footer>
 </body>
 </html>
