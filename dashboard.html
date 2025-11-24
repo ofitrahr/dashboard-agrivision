@@ -152,7 +152,7 @@
             }
         });
 
-        fetch('kadatuan_soc102025_ver3.geojson')
+        fetch('data/kadatuan_soc102025_ver3.geojson')
             .then(res => res.json())
             .then(data => soc_pred.addData(data))
             .catch(err => console.error('Error loading GeoJSON:', err));
