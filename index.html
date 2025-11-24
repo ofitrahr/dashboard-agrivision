@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Landing Page</title>
+  <title>Agrivision - Smart Agritech Company</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -39,32 +39,78 @@
       background: #ddd;
       margin-top: 40px;
     }
+
+    /* PARTNERS AUTO-CAROUSEL */
+    @keyframes partnerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .partners-wrapper {
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .partners-track {
+      display: flex;
+      gap: 60px;
+      padding: 20px 0;
+      animation: partnerScroll 18s linear infinite;
+    }
   </style>
 </head>
+
 <body>
-  <nav style="display:flex; justify-content:space-between; align-items:center; background:#053B26; padding:18px 40px; box-shadow:0 2px 4px rgba(0,0,0,0.2); position:sticky; top:0; z-index:1000;">
+
+  <!-- UPDATED NAVBAR -->
+  <nav style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#053B26;
+    padding:18px 40px;
+    box-shadow:0 2px 4px rgba(0,0,0,0.2);
+    position:sticky;
+    top:0;
+    z-index:1000;
+  ">
+
+    <!-- LEFT: LOGO -->
     <div>
-      <img src="asset/agrivision.png" alt="Company Logo" style="height:40px; object-fit:contain;" />
+      <img src="asset/agrivision.png" alt="Company Logo"
+           style="height:40px; object-fit:contain;" />
     </div>
 
+    <!-- CENTER MENU -->
     <div style="display:flex; gap:40px;">
-      <a href="#home" style="text-decoration:none; color:#FFFFFF; font-weight:bold; letter-spacing:0.5px;">Home</a>
+      <a href="#home" style="text-decoration:none; color:#FFFFFF; font-weight:bold;">Home</a>
+      <a href="#solutions" style="text-decoration:none; color:#FFFFFF; font-weight:bold;">Our Solutions</a>
+      <a href="#activities" style="text-decoration:none; color:#FFFFFF; font-weight:bold;">Activities</a>
+      <a href="#about" style="text-decoration:none; color:#FFFFFF; font-weight:bold;">About Us</a>
+    </div>
 
-      <style>
-        a[href='dashboard.html']:hover {
-          transform: scale(1.07);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        }
-      </style>
-
-      <a href="#solutions" style="text-decoration:none; color:#FFFFFF; font-weight:bold; letter-spacing:0.5px;">Our Solutions</a>
-      <a href="#about" style="text-decoration:none; color:#FFFFFF; font-weight:bold; letter-spacing:0.5px;">About Us</a>
-
-      <!-- NEW: Log In -->
-      <a href="loginpage.html" target="_blank" style="text-decoration:none; color:#FFFFFF; font-weight:bold; letter-spacing:0.5px;">
+    <!-- RIGHT: LOGIN BUTTON -->
+    <div>
+      <a href="loginpage.html" target="_blank"
+        style="
+          text-decoration:none;
+          color:#053B26;
+          font-weight:bold;
+          background:#CFFFD0;
+          padding:10px 26px;
+          border-radius:6px;
+          transition:0.25s ease;
+          box-shadow:0 2px 6px rgba(0,0,0,0.2);
+        "
+        onmouseover="this.style.background='#B8F5BA'"
+        onmouseout="this.style.background='#CFFFD0'"
+      >
         Log In
       </a>
     </div>
+
   </nav>
 
   <header style="background: url('asset/header_wallpaper.png') center/cover no-repeat; padding: 240px; color: white;">
@@ -79,11 +125,10 @@
     </a>
   </header>
 
-  <!-- FULL-WIDTH WHO WE ARE SECTION -->
+  <!-- WHO WE ARE -->
   <section style="background:#F4F7F6; padding:120px 70px; max-width:none;">
     <div style="width:100%; display:flex; gap:70px; align-items:flex-start;">
 
-      <!-- Left Text -->
       <div style="flex:1; min-width:300px;">
         <h2 style="color:#004D40; font-size:36px; margin-bottom:25px;">Who Are We?</h2>
         <p style="line-height:1.8; font-size:18px; color:#2E3D3A;">
@@ -91,7 +136,6 @@
         </p>
       </div>
 
-      <!-- Right Cards Grid -->
       <div style="flex:3; display:grid; grid-template-columns:repeat(3,1fr); gap:32px; width:100%;">
 
         <div style="background:white; padding:35px; border-radius:12px;
@@ -140,67 +184,50 @@
     </div>
   </section>
 
-  <!-- OUR TEAM SECTION -->
+  <!-- OUR TEAM -->
   <section style="background:#FFFFFF; padding:70px 70px; max-width:none;">
     <h2 style="color:#004D40; font-size:36px; margin-bottom:100px; text-align:center;">Our Team</h2>
 
     <div style="display:flex; justify-content:center; gap:80px; flex-wrap:wrap;">
 
-      <!-- Founder 1 -->
       <div style="text-align:center; width:260px;">
         <img src="asset/Sofya Restu2.jpg" 
-             alt="Founder 1"
              style="width:160px; height:160px; border-radius:50%; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,0.1); margin-bottom:20px;">
         <h3 style="color:#1B5E20; margin-bottom:6px;">Sofya Restu Seftyani, M.Sc.</h3>
         <p style="color:#2E3D3A; font-weight:bold; margin-bottom:10px;">Founder & CEO</p>
-        <p style="color:#555; font-size:15px; line-height:1.6;">
-          7 years experience in agribusiness and integrated farming system
-        </p>
+        <p style="color:#555; font-size:15px; line-height:1.6;">7 years experience in agribusiness and integrated farming system</p>
       </div>
 
-      <!-- Founder 2 -->
       <div style="text-align:center; width:260px;">
         <img src="asset/Fitrah Ramadhan3.jpg"
-             alt="Founder 2"
              style="width:160px; height:160px; border-radius:50%; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,0.1); margin-bottom:20px;">
         <h3 style="color:#1B5E20; margin-bottom:6px;">Fitrah Ramadhan, M.Sc.</h3>
         <p style="color:#2E3D3A; font-weight:bold; margin-bottom:10px;">Co-Founder & CTO</p>
-        <p style="color:#555; font-size:15px; line-height:1.6;">
-          Expert in AI, remote sensing, and agricultural decision-support systems
-        </p>
+        <p style="color:#555; font-size:15px; line-height:1.6;">Expert in AI, remote sensing, and agricultural decision-support systems</p>
       </div>
 
-      <!-- Founder 3 -->
       <div style="text-align:center; width:260px;">
         <img src="asset/Nur Amalia3.jpg"
-             alt="Founder 3"
              style="width:160px; height:160px; border-radius:50%; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,0.1); margin-bottom:20px;">
         <h3 style="color:#1B5E20; margin-bottom:6px;">Nur Amelia, S.Ds.</h3>
         <p style="color:#2E3D3A; font-weight:bold; margin-bottom:10px;">Co-Founder & CBDO</p>
-        <p style="color:#555; font-size:15px; line-height:1.6;">
-          Specialist in sustainability and circular economy project for corporate 
-        </p>
+        <p style="color:#555; font-size:15px; line-height:1.6;">Specialist in sustainability and circular economy project for corporate</p>
       </div>
 
     </div>
   </section>
 
-
-  <!-- OUR ACTIVITIES SECTION -->
+  <!-- CURRENT ACTIVITIES -->
   <section style="background:#F4F7F6; padding:90px 70px; max-width:none;">
     <h2 style="color:#004D40; font-size:36px; margin-bottom:60px; text-align:center;">
       Current Activities
     </h2>
 
-    <!-- Carousel Container -->
     <div style="position:relative; max-width:1100px; margin:auto; overflow:hidden;">
-
-      <!-- Slider Wrapper -->
       <div id="activitySlider" 
            style="display:flex; gap:30px; transition:transform 0.5s ease;">
 
-        <!-- Slide 1 -->
-        <a href="https://your-article-link-1.com" target="_blank" 
+        <a href="#" target="_blank"
            style="min-width:350px; background:white; border-radius:14px; 
                 box-shadow:0 4px 12px rgba(0,0,0,0.2); overflow:hidden; text-decoration:none; color:inherit;">
           <img src="activities/251124/251124_profile.png" style="width:100%; height:200px; object-fit:cover;">
@@ -212,8 +239,7 @@
           </div>
         </a>
 
-        <!-- Slide 2 -->
-        <a href="https://your-article-link-2.com" target="_blank"
+        <a href="#" target="_blank"
            style="min-width:350px; background:white; border-radius:14px; 
                  box-shadow:0 4px 12px rgba(0,0,0,0.2); overflow:hidden; text-decoration:none; color:inherit;">
           <img src="activities/251130/251130_profile.png" style="width:100%; height:200px; object-fit:cover;">
@@ -225,8 +251,7 @@
           </div>
         </a>
 
-        <!-- Slide 3 -->
-        <a href="https://your-article-link-3.com" target="_blank"
+        <a href="#" target="_blank"
            style="min-width:350px; background:white; border-radius:14px; 
                   box-shadow:0 4px 12px rgba(0,0,0,0.2); overflow:hidden; text-decoration:none; color:inherit;">
           <img src="activities/251205/251205_profile.png" style="width:100%; height:200px; object-fit:cover;">
@@ -240,7 +265,6 @@
 
       </div>
 
-    <!-- Left Arrow -->
       <div onclick="slideActivities(-1)" 
            style="position:absolute; top:45%; left:0; 
                   background:#004D40; color:white; padding:10px 14px; 
@@ -248,7 +272,6 @@
         &#10094;
       </div>
 
-      <!-- Right Arrow -->
       <div onclick="slideActivities(1)" 
            style="position:absolute; top:45%; right:0; 
                   background:#004D40; color:white; padding:10px 14px; 
@@ -258,7 +281,6 @@
 
     </div>
 
-    <!-- Slider Script -->
     <script>
       let currentSlide = 0;
 
@@ -268,7 +290,6 @@
 
         currentSlide = currentSlide + direction;
 
-        // LOOPING SYSTEM
         if (currentSlide < 0) currentSlide = totalSlides - 1;
         if (currentSlide >= totalSlides) currentSlide = 0;
 
@@ -276,63 +297,176 @@
         slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
       }
 
-      // Auto-slide every 4 seconds
       setInterval(() => slideActivities(1), 4000);
     </script>
 
   </section>
 
-
-  <!-- ⭐ UPDATED: OUR PARTNERS SECTION WITH SMOOTH CONTINUOUS SCROLL -->
+  <!-- OUR PARTNERS -->
   <section style="background:#FFFFFF; padding:100px 70px; max-width:none; text-align:center;">
     <h2 style="color:#004D40; font-size:36px; margin-bottom:50px;">
       Our Partners
     </h2>
 
-    <!-- Smooth Scrolling Container -->
-    <div style="
-        overflow: hidden;
-        white-space: nowrap;
-        position: relative;
-        width: 100%;
-      ">
-    
-      <div id="partnersSmooth"
-           style="
-             display: inline-flex;
-             gap: 60px;
-            align-items: center;
-            animation: scrollPartners 18s linear infinite;
-          ">
-      
-        <!-- Original Logos -->
-        <img src="partners/partner1.png" style="height:80px; object-fit:contain;">
-        <img src="partners/partner2.png" style="height:80px; object-fit:contain;">
-        <img src="partners/partner3.png" style="height:80px; object-fit:contain;">
-        <img src="partners/partner4.png" style="height:80px; object-fit:contain;">
+    <div class="partners-wrapper">
+      <div class="partners-track">
+        <img src="asset/partner/pt lapi.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/itb.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/labtech.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/kadatuan.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/biosphereplus.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/btp.jpg" style="height:180px; object-fit:contain;">
 
-        <!-- Duplicate Logos for Seamless Loop -->
-        <img src="partners/partner1.png" style="height:80px; object-fit:contain;">
-        <img src="partners/partner2.png" style="height:80px; object-fit:contain;">
-        <img src="partners/partner3.png" style="height:80px; object-fit:contain;">
-        <img src="partners/partner4.png" style="height:80px; object-fit:contain;">
+        <img src="asset/partner/pt lapi.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/itb.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/labtech.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/kadatuan.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/biosphereplus.jpg" style="height:180px; object-fit:contain;">
+        <img src="asset/partner/btp.jpg" style="height:180px; object-fit:contain;">
       </div>
     </div>
-
-    <style>
-      @keyframes scrollPartners {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-      }
-    </style>
-  
   </section>
 
+  <!-- LET'S CONNECT! -->
+<section style="background: #004D40; padding:100px 70px; max-width:none; text-align:center; margin-bottom:0;">
 
+  <!-- WRAPPER: GRID 2 COLUMNS -->
+  <div style="
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:80px;
+    align-items:flex-start;
+    max-width:1100px;
+    margin:0 auto;
+  ">
+
+    <!-- LEFT SIDE TITLE + CONTACTS -->
+<div style="display:flex; flex-direction:column; gap:70px; text-align:left;">
+
+  <!-- TITLE -->
+  <h2 style="color:#F4F7F6; font-size:36px; margin-bottom:20px; text-align:left;">
+    Let's Connect!
+  </h2>
+
+  <!-- EMAIL -->
+  <a href="mailto:connect@agrivisiontech.com" style="text-decoration:none; color:inherit;">
+    <div style="display:flex; align-items:center; gap:20px;">
+      <img src="asset/email3.png" style="width:60px; height:60px;">
+      <div>
+        <h3 style="color:#cfffd0; margin:0;">Email</h3>
+        <p style="color:white; font-size:16px; margin:5px 0 0;">
+          connect@agrivisiontech.com
+        </p>
+      </div>
+    </div>
+  </a>
+
+  <!-- OFFICE ADDRESS (NOT CLICKABLE) -->
+  <div style="display:flex; align-items:center; gap:20px;">
+    <img src="asset/location3.png" style="width:60px; height:60px;">
+    <div>
+      <h3 style="color:#cfffd0; margin:0;">Office Address</h3>
+      <p style="color:white; font-size:16px; margin:5px 0 0;">
+        Jl. Haji Gari No.43B RT002/RW003 Pesanggrahan,<br>
+        Pesanggrahan, Jakarta Selatan 12320
+      </p>
+    </div>
+  </div>
+
+  <!-- LINKEDIN -->
+  <a href="https://www.linkedin.com/company/agrivisiontechnology/" 
+     target="_blank" style="text-decoration:none; color:inherit;">
+    <div style="display:flex; align-items:center; gap:20px;">
+      <img src="asset/linkedin3.png" style="width:60px; height:60px;">
+      <div>
+        <h3 style="color:#cfffd0; margin:0;">LinkedIn</h3>
+        <p style="color:white; font-size:16px; margin:5px 0 0;">
+          https://www.linkedin.com/company/agrivisiontechnology/
+        </p>
+      </div>
+    </div>
+  </a>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/6290546670" 
+     target="_blank" style="text-decoration:none; color:inherit;">
+    <div style="display:flex; align-items:center; gap:20px;">
+      <img src="asset/whatsapp.png" style="width:60px; height:60px;">
+      <div>
+        <h3 style="color:#cfffd0; margin:0;">Contact Number</h3>
+        <p style="color:white; font-size:16px; margin:5px 0 0;">
+          +62 9054 6670 (Available on WhatsApp)
+        </p>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+
+    <!-- RIGHT SIDE: CONTACT FORM -->
+    <div style="
+      background:white;
+      padding:60px;
+      border-radius:12px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.08);
+      text-align:left;
+    ">
+
+      <!-- NEW TITLE -->
+      <h2 style="color:#1B5E20; margin-top:0; margin-bottom:25px; font-size:30px;">
+        Have Any Enquiries?
+      </h2>
+
+      <form action="https://formsubmit.co/connect@agrivisiontech.com" method="POST">
+
+  <!-- Disable captcha -->
+  <input type="hidden" name="_captcha" value="false">
+
+  <!-- Redirect to a thank-you page (optional) -->
+  <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> -->
+
+  <label style="font-weight:bold; color:#1B5E20;">Name</label>
+  <input type="text" name="name" required style="
+    width:100%; padding:14px; margin:10px 0 20px;
+    border:1px solid #ccc; border-radius:8px;
+  ">
+
+  <label style="font-weight:bold; color:#1B5E20;">Email</label>
+  <input type="email" name="email" required style="
+    width:100%; padding:14px; margin:10px 0 20px;
+    border:1px solid #ccc; border-radius:8px;
+  ">
+
+  <label style="font-weight:bold; color:#1B5E20;">Message</label>
+  <textarea name="message" required style="
+    width:100%; padding:14px; height:120px; margin:10px 0 25px;
+    border:1px solid #ccc; border-radius:8px;
+  "></textarea>
+
+  <button type="submit" style="
+    background:#1B5E20;
+    color:white;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+  ">
+    Send Message
+  </button>
+</form>
+
+    </div>
+
+  </div>
+
+</section>
 
 
   <footer>
-    &copy; 2025 Your Company Name
+    &copy; 2025 PT. Visi Agrikultur Indonesia
   </footer>
+
 </body>
 </html>
