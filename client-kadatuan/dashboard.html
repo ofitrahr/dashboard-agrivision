@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SOC Monitoring Dashboard - Kadatuan</title>
+
+  <!-- Bootstrap & Leaflet & Chart.js -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #f8f9fa;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    header {
+      background: #0f3f32;
+      color: white;
+      padding: 14px 28px;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    header img { height:42px; width:auto; display:block; }
+
+    .main-section {
+      margin-top: 10px;
+      padding: 26px;
+      display: grid;
+      grid-template-columns: 380px 1fr; /* left fixed, right fluid */
+      gap: 26px;
+    }
+
+    .card-custom {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    /* Left card split into two rows (timeseries removed) */
+    .left-grid {
+      display: grid;
+      grid-template-rows: auto 1fr; 
+      gap: 14px;
+      height: 72vh;
+    }
+
+    .section-title { font-weight: 700; margin-bottom:8px; }
+    .var-description { color:#333; line-height:1.45; font-size:14px; }
+
+    .card-map { padding:0; position:relative; }
+    #map { height: 72vh; width:100%; border-radius:14px; }
+
+    #mapToolbar {
+      position:absolute; top:12px; left:50px; z-index:1000;
+      background:white; padding:8px 12px; border-radius:8px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .legend {
+      line-height: 18px;
+      background: rgba(255,255,255,0.95);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      font-size: 13px;
+      width: 260px !important;
+    }
+
+    footer {
+      background-color: #e9ecef;
+      color: #555;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 0.9rem;
+      margin-top: 20px;
+    }
+
+    @media(max-width:1000px) {
+      .main-section { grid-template-columns: 1fr; }
+      .left-grid { height: auto; grid-template-rows: auto auto; }
+      #map { height: 55vh; }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="../asset/agrivision.png" alt="Agrivision Logo">
+    <div style="font-size:28px; font-weight:600;">Kebon Kopi Kadatuan Cimaung</div>
+    <a href="../client-kadatuan/selectproject.html" style="padding:8px 16px; background:white; color:#0f3f32; border-radius:8px; font-weight:600; text-decoration:none;">← Back to Main Menu</a>
+    <a href="../loginpage.html" style="padding:8px 16px; background:white; color:#0f3f32; border-radius:8px; font-weight:600; text-decoration:none;">Log Out</a>
+  </header>
+
+  <!-- MAIN -->
+  <section class="main-section">
+
+    <!-- LEFT: 2 ROWS (timeseries removed) -->
+    <div class="card-custom left-grid">
+
+      <!-- ROW 1: variable description -->
+      <div id="descRow" style="padding:12px;">
+        <div class="section-title">Variable Description</div>
+        <div id="varTitle" style="font-weight:700; margin-bottom:6px;">SOC_TON</div>
+        <div id="varDescription" class="var-description">
+          Soil Organic Carbon (SOC) in Tons per Hectare. This value is an estimate of the organic carbon content in the soil, which is important for fertility and carbon storage.
+        </div>
+      </div>
+
+      <!-- ROW 2: histogram -->
+      <div style="padding:12px;">
+        <div class="section-title">Histogram: Value Distribution</div>
+
+        <!-- 📌 DIMENSI DIKUNCI -->
+        <canvas id="histogramChart" width="340" height="220"></canvas>
+
+        <div id="histHint" style="font-size:12px; color:#666; margin-top:6px;">
+          Click on a feature on the map to highlight its value.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: MAP -->
+    <div class="card-custom card-map">
+
+      <div id="mapToolbar">
+        <label style="font-size:14px; font-weight:600; margin-right:8px;">Select Variable:</label>
+        <select id="variableSelector" style="padding:4px 8px; border-radius:6px;">
+          <option value="SOC_TON">SOC_TON</option>
+          <option value="Health_Index">Health_Index</option>
+          <option value="Nutrition_Index">Nutrition_Index</option>
+        </select>
+      </div>
+
+      <div id="map"></div>
+    </div>
+
+  </section>
+
+  <section class="mx-4 my-3">
+    <!-- ============================
+         SECTION 2 — SUMMARY STATISTICS (1fr : 3fr)
+    =============================== -->
+    <div class="row mt-3">
+
+        <!-- Big Number Panel (1fr) -->
+<div class="col-md-3">
+    <div class="card shadow-sm p-2 d-flex flex-column" 
+        style="height: 230px; margin-right: 8px;">
+
+        <!-- Top section (3fr) -->
+        <div class="flex-grow-1 d-flex flex-column justify-content-start text-center" style="flex:3;">
+            <h5 class="mb-2" style="margin-top:10px;">Carbon Change (up to Nov, 2025)</h5>
+
+            <h2 id="bigNumber" class="fw-bold text-success" style="margin-top:10px;">
+                + 9 TON carbon <br> absorbed
+            </h2>
+        </div>
+
+        <!-- Bottom section (1fr) -->
+        <div class="mt-3 text-center" style="flex:1;">
+            <button class="btn btn-success w-100" style="font-weight:600; padding:10px 0;">
+                Download Data
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+        <!-- Line Chart Panel (3fr) -->
+        <div class="col-md-9">
+            <div class="card shadow-sm p-3" style="height: 230px; margin-left: 8px;">
+                <h5 class="mb-2">Change of SOC Over Time in 2025</h5>
+                <canvas id="summaryLineChart" style="height:160px;"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    // Dummy line chart for summary statistics
+    const summaryCtx = document.getElementById('summaryLineChart').getContext('2d');
+
+    const summaryLineChart = new Chart(summaryCtx, {
+        type: 'line',
+        data: {
+            labels: ['Aug', 'Sep', 'Oct, ', 'Nov'],
+            datasets: [{
+                label: 'Trend',
+                data: [10, 14, 13, 19],
+                borderWidth: 3,
+                borderColor: 'rgba(0, 150, 80, 1)',
+                backgroundColor: 'rgba(0, 150, 80, 0.1)',
+                tension: 0.3,
+                pointRadius: 4,
+                pointBackgroundColor: 'rgba(0, 150, 80, 1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+</script>
+
+</section>
+
+
+
+
+
+
+  <footer>© 2025 Agrivision Technology Property | Developed with Leaflet & Bootstrap</footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+
+  <script>
+  /**************************************************************************
+   * MAP SETUP (unchanged)
+   **************************************************************************/
+  var defaultCenter = [-7.1058563, 107.571111];
+  var defaultZoom = 14;
+
+  var map = L.map('map').setView(defaultCenter, defaultZoom);
+
+  var esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 }).addTo(map);
+  var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png');
+  var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
+
+  var variableRanges = {
+    SOC_TON: { min: 1.3, max: 2.0 },
+    Health_Index: { min: 148, max: 209 },
+    Nutrition_Index: { min: 5.68, max: 8.03 }
+  };
+
+  var colorSchemes = {
+    SOC_TON: { colors: ["#ffffcc", "#ff6600"] },
+    Health_Index: { colors: ["#ffffff", "#00ff00"] },
+    Nutrition_Index: { colors: ["#e0f7fa", "#006064"] }
+  };
+
+  var currentVariable = "SOC_TON";
+
+  function interpolateColorHex(hex1, hex2, factor) {
+    var a = parseInt(hex1.slice(1),16), b = parseInt(hex2.slice(1),16);
+    var r1=(a>>16)&255, g1=(a>>8)&255, b1=a&255;
+    var r2=(b>>16)&255, g2=(b>>8)&255, b2=b&255;
+    var r=Math.round(r1 + factor*(r2-r1));
+    var g=Math.round(g1 + factor*(g2-g1));
+    var bb=Math.round(b1 + factor*(b2-b1));
+    return `rgb(${r},${g},${bb})`;
+  }
+
+  function getColorForVariable(value, v) {
+    var r = variableRanges[v];
+    if (value == null || isNaN(value)) return '#cccccc';
+    var ratio = (value - r.min) / (r.max - r.min);
+    ratio = Math.min(Math.max(ratio, 0), 1);
+    var scheme = colorSchemes[v].colors;
+    return interpolateColorHex(scheme[0], scheme[1], ratio);
+  }
+
+  /**************************************************************************
+   * GEOJSON LAYER (unchanged)
+   **************************************************************************/
+  var soc_pred = L.geoJSON(null, {
+    style: function(feature) {
+      var val = feature.properties[currentVariable];
+      return {
+        color: "#555",
+        weight: 0,
+        fillColor: getColorForVariable(val, currentVariable),
+        fillOpacity: 0.8
+      };
+    },
+    onEachFeature: function(feature, layer) {
+      layer.on('click', function(e) {
+        var props = feature.properties;
+        var clickedValue = props[currentVariable];
+        handleFeatureClick(props, clickedValue, layer, e);
+      });
+      layer.bindPopup(function() {
+        var popup = `<b>${currentVariable}</b><br>`;
+        for (var k in feature.properties) {
+          popup += `<b>${k}:</b> ${feature.properties[k]}<br>`;
+        }
+        return popup;
+      });
+    }
+  });
+
+  fetch('../data/kadatuan_soc102025_ver3.geojson')
+    .then(res => res.json())
+    .then(data => {
+      soc_pred.addData(data).addTo(map);
+      try { map.fitBounds(soc_pred.getBounds().pad(0.12)); }
+      catch(e) { map.setView(defaultCenter, defaultZoom); }
+      setTimeout(()=>map.invalidateSize(), 400);
+
+      buildHistogramFromLayer();
+      updateLegend();
+    });
+
+  L.control.layers(
+    {"Satellite": esriSat, "OpenStreetMap": osm, "Topographic": openTopoMap},
+    {"Prediction Layer": soc_pred},
+    {collapsed:false}
+  ).addTo(map);
+
+  var legend = L.control({ position: 'bottomright' });
+  legend.onAdd = () => L.DomUtil.create('div','legend');
+  legend.addTo(map);
+
+  function updateLegend() {
+    var r = variableRanges[currentVariable];
+    var scheme = colorSchemes[currentVariable].colors;
+    var div = document.querySelector('.legend');
+    div.innerHTML = `
+      <h4 style="margin:0 0 6px 0; font-size:14px; text-align:center;">${currentVariable}</h4>
+      <div style="height:18px; width:240px; margin:auto;
+        background: linear-gradient(to right, ${scheme[0]}, ${scheme[1]});
+        border-radius:4px; border:1px solid #888; margin-bottom:6px;"></div>
+      <div style="display:flex; justify-content:space-between; font-size:12px;">
+        <span>${r.min}</span>
+        <span>${((r.min+r.max)/2).toFixed(2)}</span>
+        <span>${r.max}</span>
+      </div>
+    `;
+  }
+
+  /**************************************************************************
+   * DESCRIPTION (unchanged)
+   **************************************************************************/
+  var descriptions = {
+    SOC_TON: {
+      title: 'SOC_TON (Ton / 100 m2)',
+      text: 'Soil Organic Carbon (SOC) in Tons per Hectare. This value is an estimate of the organic carbon content in the soil, which is important for fertility and carbon storage.'
+    },
+    Health_Index: {
+      title: 'Plant Health Index',
+      text: 'Plant health index is assessed from the greenness index (level of plant greenness). The greener the plant (moving away from 0), the more it indicates that the plant is healthy.'
+    },
+    Nutrition_Index: {
+      title: 'Soil Health (kg / 100m2)',
+      text: 'Soil health is measured by the amount of Nitrogen, Phosphorus, and Potassium (NPK) content in the soil. The higher the NPK value (kg/100 m²), the more fertile the soil is for planting.'
+    }
+  };
+
+  function updateDescription() {
+    document.getElementById('varTitle').innerText = descriptions[currentVariable].title;
+    document.getElementById('varDescription').innerText = descriptions[currentVariable].text;
+  }
+
+  /**************************************************************************
+   * HISTOGRAM (unchanged except fixed size)
+   **************************************************************************/
+  var histogramChart = null;
+  var histBins = 20;
+
+  function buildHistogramFromLayer() {
+    var vals = [];
+    var geo = soc_pred.toGeoJSON();
+    geo.features.forEach(f=>{
+      var v = f.properties[currentVariable];
+      if (!isNaN(v)) vals.push(Number(v));
+    });
+    var h = computeHistogram(vals, histBins);
+    updateHistogram(h.labels, h.counts);
+  }
+
+  function computeHistogram(values, bins) {
+    var min = Math.min(...values);
+    var max = Math.max(...values);
+    if (min === max) { min-=0.5; max+=0.5; }
+    var width = (max-min)/bins;
+    var labels=[], counts=new Array(bins).fill(0);
+    for(let i=0;i<bins;i++){
+      let a=min+i*width, b=a+width;
+      labels.push(`${roundSmart(a)} - ${roundSmart(b)}`);
+    }
+    values.forEach(v=>{
+      let idx=Math.floor((v-min)/width);
+      idx = Math.max(0, Math.min(bins-1, idx));
+      counts[idx]++;
+    });
+    return {labels, counts};
+  }
+
+  function roundSmart(x){
+    return (Math.abs(x)>=10)?Math.round(x):(Math.round(x*100)/100);
+  }
+
+  function updateHistogram(labels, counts){
+    var ctx = document.getElementById('histogramChart').getContext('2d');
+
+    if (histogramChart) histogramChart.destroy();
+
+    var range = variableRanges[currentVariable];
+    var min = range.min, max = range.max;
+
+    var scheme = colorSchemes[currentVariable].colors;
+    var colors = labels.map((_,i)=>{
+      var factor = i/(labels.length-1);
+      return interpolateColorHex(scheme[0], scheme[1], factor).replace('rgb','rgba').replace(')',',0.85)');
+    });
+
+    histogramChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          { data: counts, backgroundColor: colors, borderWidth: 1 }
+        ]
+      },
+      options: {
+        responsive: false,          /* 📌 FIXED SIZE */
+        maintainAspectRatio: false, /* 📌 FIXED SIZE */
+        plugins: { legend: {display:false} },
+        scales: { y: {beginAtZero:true} }
+      }
+    });
+  }
+
+  /**************************************************************************
+   * FEATURE CLICK — only histogram highlight (timeseries removed)
+   **************************************************************************/
+  var lastSelectedLayer=null;
+
+  function handleFeatureClick(props, value, layer){
+    if (lastSelectedLayer) lastSelectedLayer.setStyle({weight:0});
+    layer.setStyle({weight:2, color:'#222'});
+    lastSelectedLayer = layer;
+
+    document.getElementById('histHint').innerText = `Selected value: ${value}`;
+    highlightHistogram(value);
+  }
+
+  function highlightHistogram(v){
+    if (!histogramChart) return;
+
+    var labels = histogramChart.data.labels;
+    var bins = labels.length;
+    var r = variableRanges[currentVariable];
+    var min=r.min, max=r.max;
+    var width = (max-min)/bins;
+
+    var idx=Math.floor((v-min)/width);
+    idx=Math.max(0, Math.min(bins-1, idx));
+
+    histogramChart.data.datasets[0].borderColor = labels.map((_,i)=> i===idx ? 'black' : 'rgba(0,0,0,0)');
+    histogramChart.data.datasets[0].borderWidth = labels.map((_,i)=> i===idx ? 2 : 1);
+
+    histogramChart.update();
+  }
+
+  /**************************************************************************
+   * VARIABLE SWITCH
+   **************************************************************************/
+  document.getElementById('variableSelector').addEventListener('change', function(){
+    currentVariable = this.value;
+
+    soc_pred.setStyle(f=>{
+      var val=f.properties[currentVariable];
+      return {weight:0, fillColor:getColorForVariable(val,currentVariable), fillOpacity:0.8};
+    });
+
+    updateLegend();
+    updateDescription();
+    buildHistogramFromLayer();
+  });
+
+  
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Collection - Agrivision</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <style>
+    :root{
+      --forest-green: #0f3f32;
+      --light-bg: #f4f7f8;
+      --card-border: #dbe8e6;
+      --text-dark: #063241;
+    }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light-bg);
+      color: #111;
+    }
+
+    /* NAVBAR / HEADER */
+    .header {
+      background: var(--forest-green);
+      color: white;
+      border-bottom: 2px solid rgba(255,255,255,0.03);
+      padding: 18px 24px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header .logo {
+      justify-self: start;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header .logo img{
+      height: 40px;
+      width: auto;
+      display:block;
+    }
+
+    .header .title {
+      justify-self: center;
+      text-align: center;
+      font-weight: 700;
+      font-size: 28px;
+      margin: 0;
+      color: white;
+    }
+
+    .header .right {
+      justify-self: end;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .btn {
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:8px;
+      background: white;
+      color: var(--forest-green);
+      font-weight:600;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,0.2);
+    }
+
+    .container {
+      max-width: 1500px;
+      max-height: 1500px;
+      margin: 36px auto;
+      padding: 0 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 28px;
+      min-height: 480px;
+      box-shadow: 0 1px 0 rgba(3,24,30,0.03);
+    }
+
+    .card h3{
+      margin-top: 0;
+      text-align:center;
+      color: var(--text-dark);
+      font-size:20px;
+    }
+
+    /* UPDATED COMPANY TABLE */
+    .company-table {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr;
+      font-size: 13px;
+      border: 1px solid #e5eceb;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .company-table .row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      padding: 10px 14px;
+      border-bottom: 1px solid #eef3f2;
+      column-gap: 12px;
+    }
+
+    .company-table .row:last-child {
+      border-bottom: none;
+    }
+
+    .company-table .col-left {
+      font-weight: 600;
+      color: #063241;
+    }
+
+    .company-table .col-right {
+      color: #111;
+      line-height: 1.4;
+    }
+
+    /* Basemap container */
+    #map {
+      height: 430px;
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 880px){
+      .grid { grid-template-columns: 1fr; }
+      .header { grid-template-columns: auto 1fr auto; }
+      .header .title { font-size:20px; }
+      .header .logo img { height:34px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="logo">
+      <img src="../asset/agrivision.png" alt="Agrivision Logo" />
+    </div>
+
+    <h1 class="title">PROJECT COLLECTION</h1>
+
+    <div class="right">
+      <a class="btn" href="../loginpage.html">Log Out</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+
+      <!-- LEFT CARD -->
+      <section class="card">
+        <h3>Company Profile</h3>
+
+        <!-- Centered logo -->
+        <div style="display: flex; justify-content: center; margin: 16px 0;">
+          <img src="../asset/partner/kadatuan.jpg" 
+               alt="Company Logo" 
+               style="height: 150px; width: auto;" />
+        </div>
+
+        <!-- UPDATED BORDERED TABLE -->
+        <div class="company-table">
+
+          <div class="row">
+            <div class="col-left">Name</div>
+            <div class="col-right">Kadatuan Koffie</div>
+          </div>
+
+          <div class="row">
+            <div class="col-left">Office Address</div>
+            <div class="col-right">
+              Jl. Karawitan No.48, Turangga, Kec. Lengkong, Kota Bandung, Jawa Barat 40264
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-left">Business Sector</div>
+            <div class="col-right">Agriculture, FnB</div>
+          </div>
+
+          <div class="row">
+            <div class="col-left">Date of Registration</div>
+            <div class="col-right">May 29th, 2025</div>
+          </div>
+
+          <div class="row">
+            <div class="col-left">Number of Project</div>
+            <div class="col-right">1</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RIGHT CARD -->
+      <section class="card">
+        <h3>Select The Project</h3>
+
+        <div style="margin-top: 18px;">
+          <div id="map"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // Initialize map
+    const map = L.map('map').setView([-7.106029369663011, 107.57113369741326], 11);
+
+    // Basemap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Clickable marker – opens dashboard in new tab
+    const marker = L.marker([-7.106029369663011, 107.57113369741326]).addTo(map);
+    marker.bindPopup("Kebon Kopi Kadatuan");
+
+    marker.on("click", function () {
+      window.location.href = "dashboard.html";
+    });
+  </script>
+
+</body>
+</html>
